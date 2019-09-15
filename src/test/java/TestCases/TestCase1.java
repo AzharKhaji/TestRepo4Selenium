@@ -26,7 +26,7 @@ public class TestCase1 {
 	@Test
 	public static void Login() {
 		System.out.println("Inside Login Test case after integrating with github and jenkins");
-		Driver.get("http://www.gmail.com");
+		Driver.get("http://www.gmail.dom");
 		
 		Driver.findElement(By.xpath("//*[@id=\"identifierId\"]")).sendKeys("azharkhaji313");
 		//Driver.findElement(By.id("Passwd")).sendKeys("abc");
