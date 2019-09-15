@@ -25,7 +25,7 @@ public class TestCase1 {
 	
 	@Test
 	public static void Login() {
-		System.out.println("Inside Login Test case");
+		System.out.println("Inside Login Test case after integrating with github");
 		Driver.get("http://www.gmail.com");
 		
 		Driver.findElement(By.xpath("//*[@id=\"identifierId\"]")).sendKeys("azharkhaji313");
