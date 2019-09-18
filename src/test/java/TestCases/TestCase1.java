@@ -20,15 +20,20 @@ public class TestCase1 {
 		
 		WebDriverManager.chromedriver().setup();
 		Driver = new ChromeDriver();
-		Driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+//		Driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 	}
 	
 	@Test
 	public static void Login() {
 		System.out.println("Inside Login Test case after integrating with github and jenkins");
-		Driver.get("http://www.gmail.com");
+		Driver.get("https://www.wikipedia.org/");
+		Driver.navigate().to("https://en.wikipedia.org/");
+		Driver.navigate().back();
+		System.out.println(Driver.getTitle());
 		
-		Driver.findElement(By.xpath("//*[@id=\"identifierId\"]")).sendKeys("azharkhaji313");
+		
+		
+		//Driver.findElement(By.xpath("//*[@id=\"identifierId\"]")).sendKeys("azharkhaji313");
 		//Driver.findElement(By.id("Passwd")).sendKeys("abc");
 		
 		
@@ -36,7 +41,7 @@ public class TestCase1 {
 	
 	@AfterSuite
 	public static void Exit() {
-		Driver.quit();
-		
+	//	Driver.quit();
+		System.out.println("Program execution completed successfully");
 	}
 }
