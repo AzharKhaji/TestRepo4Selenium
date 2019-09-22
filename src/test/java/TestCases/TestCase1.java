@@ -52,12 +52,12 @@ public class TestCase1 {
 		}
 
 		Ewait = new WebDriverWait(Driver, 20);
-
+		Driver.manage().window().maximize();
 	} 
 
 	@Test
 	public static void launchDropDownPage() {
-		Driver.manage().window().maximize();
+		
 		Driver.get("http://the-internet.herokuapp.com/");
 		Ewait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"content\"]/ul/li[11]/a")))
 				.click();
