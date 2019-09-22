@@ -1,10 +1,19 @@
 package TestCases;
 
-import java.util.concurrent.TimeUnit;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
@@ -14,34 +23,55 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class TestCase1 {
 
 	public static WebDriver Driver;
-	
-	@BeforeSuite
-	public static void setUp() {
-		
-		WebDriverManager.chromedriver().setup();
-		Driver = new ChromeDriver();
-//		Driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-	}
-	
-	@Test
-	public static void Login() {
-		System.out.println("Inside Login Test case after integrating with github and jenkins");
-		Driver.get("https://www.wikipedia.org/");
-		Driver.navigate().to("https://en.wikipedia.org/");
-		Driver.navigate().back();
-		System.out.println(Driver.getTitle());
-		
-		
-		
-		//Driver.findElement(By.xpath("//*[@id=\"identifierId\"]")).sendKeys("azharkhaji313");
-		//Driver.findElement(By.id("Passwd")).sendKeys("abc");
-		
-		
-	}
-	
+	public static WebDriverWait Ewait;
+
 	@AfterSuite
 	public static void Exit() {
-	//	Driver.quit();
+		// Driver.quit();
 		System.out.println("Program execution completed successfully");
 	}
+
+	@BeforeSuite
+	public static void setUp() throws IOException {
+		Properties configr = new Properties();
+		FileInputStream fstream = new FileInputStream(
+				"C:\\Users\\user\\eclipse-workspace\\20190915\\src\\test\\java\\config\\confg.properties");
+		configr.load(fstream);
+		String browserType = configr.getProperty("browser"); 
+		System.out.println(browserType);
+
+		if (browserType.equals("chrome")) {
+			WebDriverManager.chromedriver().setup();
+			Driver = new ChromeDriver();
+		} else if (browserType.equals("firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			Driver = new FirefoxDriver();
+		} else if (browserType.equals("IE")) {
+			WebDriverManager.iedriver().setup();
+			Driver = new InternetExplorerDriver();
+		}
+
+		Ewait = new WebDriverWait(Driver, 10);
+
+	} 
+
+	@Test
+	public static void launchDropDownPage() {
+		Driver.manage().window().maximize();
+		Driver.get("http://the-internet.herokuapp.com/");
+		Ewait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"content\"]/ul/li[11]/a")))
+				.click();
+
+		System.out.println(Driver.getTitle());
+	}
+
+	@Test
+	public static void selectOptions() {
+		Select DropDown = new Select(Driver.findElement(By.xpath("//*[@id=\"dropdown\"]")));
+		List<WebElement> Options = DropDown.getOptions();
+		for (WebElement eachOption : Options) {
+			System.out.println(eachOption.getAttribute("text"));
+		}
+	}
+
 }
