@@ -51,7 +51,7 @@ public class TestCase1 {
 			Driver = new InternetExplorerDriver();
 		}
 
-		Ewait = new WebDriverWait(Driver, 10);
+		Ewait = new WebDriverWait(Driver, 20);
 
 	} 
 
